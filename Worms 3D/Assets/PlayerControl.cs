@@ -22,7 +22,7 @@ public class PlayerControl : MonoBehaviour {
     List<WormControl> allWorms;
     internal List<Team> allTeams;
     WormControl currentActiveWorm;
-
+    mainCameraScript ourCamera;
 
 
     public Object WormPrefab;
@@ -35,7 +35,7 @@ public class PlayerControl : MonoBehaviour {
     void Start () {
         allWorms = new List<WormControl>();
 
-
+        ourCamera = FindObjectOfType<mainCameraScript>();
 
 
         numTeams = 4;
@@ -141,6 +141,7 @@ public class PlayerControl : MonoBehaviour {
         // This code iterates though the list of teams
         current_Team_Index = (current_Team_Index + 1) % allTeams.Count;
         print("New Team index is " + current_Team_Index.ToString() +" out of " + allTeams.Count.ToString());
+      
     }
 
     internal void nextWormSelect()
@@ -151,6 +152,7 @@ public class PlayerControl : MonoBehaviour {
         }
 
         currentActiveWorm = allTeams[current_Team_Index].incWorm(); // <----
+        ourCamera.newWormIs(currentActiveWorm);
 
     }
      public void wormDead(WormControl worm)
@@ -161,5 +163,12 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
+
+
+    //Used to give the current_Team_Index value to the ScoreScript
+    public int setId()
+    {
+        return current_Team_Index;
+    }
 
 }
